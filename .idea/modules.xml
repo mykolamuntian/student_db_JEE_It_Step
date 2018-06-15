@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/student_db_JEE_It_Step.iml" filepath="$PROJECT_DIR$/student_db_JEE_It_Step.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jdbc-demo.iml" filepath="$PROJECT_DIR$/jdbc-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
     </modules>
   </component>
 </project>

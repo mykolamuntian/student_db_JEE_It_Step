@@ -164,7 +164,7 @@ public class Application {
     private static void findStudentByName(Statement stmt) throws SQLException {
         String firstName = dataInput(ENTER_A_STUDENT_FIRST_NAME, NAME_REGEXP);
         String lastName = dataInput(ENTER_A_STUDENT_LAST_NAME, NAME_REGEXP);
-        String sql = String.format("SELECT FROM student WHERE first_name='%s' AND last_name='%s'", firstName, lastName);
+        String sql = String.format("SELECT * FROM student WHERE first_name='%s' AND last_name='%s'", firstName, lastName);
 
 //        stmt.executeQuery("SELECT * FROM `group`");
 
@@ -172,7 +172,7 @@ public class Application {
         System.out.println("Student by name " + result);
         while (result.next()) {
             System.out.format("%d\t%s%n", result.getInt(1),
-                    result.getString("name"));
+                    result.getString("first_name"));
         }
     }
 
@@ -187,10 +187,13 @@ public class Application {
 
     private static void studentListDisplay(Statement stmt) throws SQLException {
         System.out.println("student list display");
-        ResultSet result = stmt.executeQuery("SELECT * FROM `group`");
+        ResultSet result = stmt.executeQuery("SELECT * FROM student");
         while (result.next()) {
-            System.out.format("%d\t%s%n", result.getInt(1),
-                    result.getString("first_name"));
+            System.out.format("%d\tFirst name: %s\t\t\t Last name: %s\t\t\t Age: %s\t\t\t Email: %s%n", result.getInt(1),
+                    result.getString("first_name"),
+                    result.getString("last_name"),
+                    result.getString("age"),
+                    result.getString("email"));
         }
     }
 
@@ -217,6 +220,7 @@ public class Application {
     private static String getGroupIdByName(Statement stmt, String groupName) throws SQLException {
         String sql = String.format("SELECT * FROM `group` WHERE name='%s'", groupName);
         ResultSet result = stmt.executeQuery(sql);
+        result.next();
         return result.getString("id");
     }
 }
