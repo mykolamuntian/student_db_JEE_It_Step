@@ -21,14 +21,19 @@ public class Application {
             "\t6 - Remove a student\n" +
             "\t7 - Remove a group\n" +
             "\t8 - Exit";
+    public static final String ENTER_A_STUDENT_FIRST_NAME = "Enter a student first name. Example: Mykola";
+    public static final String ENTER_A_STUDENT_LAST_NAME = "Enter a student last name. Example: Muntian";
+    public static final String ENTER_STUDENT_AGE = "Enter student's age";
+    public static final String ENTER_STUDENT_EMAIL = "Enter student's email";
+    public static final String ENTER_A_GROUP_NAME = "Enter a group name. Example: group_1";
 
     private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/academy" +
             "?characterEncoding=UTF-8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASS = "1234";
 
-    private static final String DROP_STUDENT = "DROP TABLE IF EXISTS student\n";
-    private static final String DROP_GROUP = "DROP TABLE IF EXISTS `group`\n";
+//    private static final String DROP_STUDENT = "DROP TABLE IF EXISTS student\n";
+//    private static final String DROP_GROUP = "DROP TABLE IF EXISTS `group`\n";
 
     private static final String CREATE_STUDENT = "CREATE TABLE IF NOT EXISTS student\n" +
             "(\n" +
@@ -47,13 +52,10 @@ public class Application {
             "   name VARCHAR(255) NOT NULL UNIQUE\n" +
             ")\n";
 
-    private static final String ALTER_STUDENT = "ALTER TABLE student \n" +
-            "ADD CONSTRAINT student_group_fk FOREIGN KEY (group_id) REFERENCES `group`(id)\n";
-    public static final String ENTER_A_STUDENT_FIRST_NAME = "Enter a student first name. Example: Mykola";
-    public static final String ENTER_A_STUDENT_LAST_NAME = "Enter a student last name. Example: Muntian";
-    public static final String ENTER_STUDENT_AGE = "Enter student's age";
-    public static final String ENTER_STUDENT_EMAIL = "Enter student's email";
-    public static final String ENTER_A_GROUP_NAME = "Enter a group name. Example: group_1";
+//    private static final String ALTER_STUDENT = "ALTER TABLE student \n" +
+//            "ADD CONSTRAINT student_group_fk FOREIGN KEY (group_id) REFERENCES `group`(id)\n";
+
+
 
 
     public static void main(String[] args) {
@@ -78,20 +80,20 @@ public class Application {
     }
 
     private static void initDatabase(Statement stmt) throws SQLException {
-        System.out.println(DROP_STUDENT);
-        stmt.execute(DROP_STUDENT);
+//        System.out.println(DROP_STUDENT);
+//        stmt.execute(DROP_STUDENT);
 
         System.out.println(CREATE_STUDENT);
         stmt.execute(CREATE_STUDENT);
 
-        System.out.println(DROP_GROUP);
-        stmt.execute(DROP_GROUP);
+//        System.out.println(DROP_GROUP);
+//        stmt.execute(DROP_GROUP);
 
         System.out.println(CREATE_GROUP);
         stmt.execute(CREATE_GROUP);
 
-        System.out.println(ALTER_STUDENT);
-        stmt.execute(ALTER_STUDENT);
+//        System.out.println(ALTER_STUDENT);
+//        stmt.execute(ALTER_STUDENT);
     }
 
     private static String dataInput(String message, String regExp) {
@@ -171,30 +173,39 @@ public class Application {
         ResultSet result = stmt.executeQuery(sql);
         System.out.println("Student by name " + result);
         while (result.next()) {
-            System.out.format("%d\t%s%n", result.getInt(1),
-                    result.getString("first_name"));
+            System.out.format("%d\t%s %s %s %s%n", result.getInt(1),
+                    result.getString("first_name"), result.getString("last_name"),
+                    result.getString("age"),result.getString("email"));
         }
     }
 
     private static void groupListDisplay(Statement stmt) throws SQLException {
+        System.out.println();
         System.out.println("Group list:");
+        System.out.println("-------------------------");
         ResultSet result = stmt.executeQuery("SELECT * FROM `group`");
         while (result.next()) {
-            System.out.format("%d\t%s%n", result.getInt(1),
+            System.out.format("%d  |  %s%n", result.getInt(1),
                     result.getString("name"));
         }
+        System.out.println("-------------------------");
+        System.out.println();
     }
 
     private static void studentListDisplay(Statement stmt) throws SQLException {
+        System.out.println();
         System.out.println("student list display");
+        System.out.println("---------------------------------------------------------------------------------------------------");
         ResultSet result = stmt.executeQuery("SELECT * FROM student");
         while (result.next()) {
-            System.out.format("%d\tFirst name: %s\t\t\t Last name: %s\t\t\t Age: %s\t\t\t Email: %s%n", result.getInt(1),
+            System.out.format("%d\t|\tFirst name: %s\t\t|\t\tLast name: %s\t\t\t|\t\t\tAge: %s\t\t\t|\t\t\tEmail: %s%n", result.getInt(1),
                     result.getString("first_name"),
                     result.getString("last_name"),
                     result.getString("age"),
                     result.getString("email"));
         }
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.println();
     }
 
     private static void addGroup(Statement stmt) throws SQLException {
